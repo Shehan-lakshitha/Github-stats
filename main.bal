@@ -14,12 +14,12 @@ configurable string googleSheetIdPRs = ?;
 
 public function main() returns error? {
     string todayDate = getTodayDate();
-    // map<ProductRepoMap>|error productRepoMapIssues = readProductRepoMap(googleSheetIdIssues);
-    // if productRepoMapIssues is error {
-    //     log:printError("Error reading product repo map: " + productRepoMapIssues.message());
-    //     return productRepoMapIssues;
-    // }
-    // check fetchAndAppendIssues(productRepoMapIssues, todayDate);
+    map<ProductRepoMap>|error productRepoMapIssues = readProductRepoMap(googleSheetIdIssues);
+     if productRepoMapIssues is error {
+         log:printError("Error reading product repo map: " + productRepoMapIssues.message());
+         return productRepoMapIssues;
+     }
+    check fetchAndAppendIssues(productRepoMapIssues, todayDate);
 
     map<ProductRepoMapPRs>|error productRepoMapPRs = getOrgRepos(googleSheetIdPRs);
     if productRepoMapPRs is error {
